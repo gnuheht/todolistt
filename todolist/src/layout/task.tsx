@@ -3,16 +3,18 @@ import { useState, memo } from 'react';
 type TaskContent = {
   content: string | null;
   completed: boolean;
+  onDelete: Function;
 };
 
 const Task = (contents: TaskContent) => {
-  const { content, completed } = contents;
+  const { content, completed, onDelete } = contents;
   const [check, setCheck] = useState(completed);
 
   const handleCheck = () => {
     setCheck((prev) => !prev);
   };
 
+  console.log(onDelete);
   return (
     <>
       <li className="py-4 flex flex-row justify-between">
@@ -32,6 +34,7 @@ const Task = (contents: TaskContent) => {
           className={`bg-red-400 hover:bg-red-700 text-base border-1  text-white py-1 px-3 rounded ${
             check ? 'flex' : 'hidden'
           }`}
+          onClick={() => onDelete(content)}
         >
           Delete
         </button>

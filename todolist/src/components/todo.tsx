@@ -22,7 +22,7 @@ const Todo = () => {
     },
   ]);
 
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState<Boolean>(false);
   const [type, setType] = useState<String>('success' || 'error');
 
   const handleClose = () => {
@@ -62,9 +62,14 @@ const Todo = () => {
     }
   };
 
-  const handleDelete = (i) => {
-    setTodolist((prev) => {});
+  const handleDelete = (taskContent: string) => {
+    setTodolist((prev) => {
+      const newTodo = prev.filter((p) => p.content !== taskContent);
+      return newTodo;
+    });
   };
+
+  console.log('type :', type);
 
   return (
     <>
@@ -93,9 +98,16 @@ const Todo = () => {
           </div>
         </div>
         <ul className="divide-y divide-gray-200 px-4">
-          {todolist.map((todos, i) => (
-            <Task key={i} content={todos.content} completed={todos.completed} />
-          ))}
+          {todolist.map((todos, i) => {
+            return (
+              <Task
+                key={`task-${i}`}
+                content={todos.content}
+                completed={todos.completed}
+                onDelete={() => handleDelete(`${todos.content}`)}
+              />
+            );
+          })}
         </ul>
       </div>
       {show && <Toast type={type} onClose={handleClose} />}

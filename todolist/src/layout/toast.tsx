@@ -7,7 +7,6 @@ type Toasts = {
 
 const Toast = (props: Toasts) => {
   const { type, onClose } = props;
-  console.log('toast');
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
@@ -16,7 +15,8 @@ const Toast = (props: Toasts) => {
     return () => clearTimeout(timer);
   }, [onClose]);
 
-  console.log(' type', type);
+  console.log(' type toast : ', type);
+  console.log(' prop type : ', props.type);
 
   return (
     <>
