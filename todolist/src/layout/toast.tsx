@@ -1,33 +1,34 @@
 import { useEffect } from 'react';
 import { ToastSuccess, ToastError } from './icon';
 type Toasts = {
+  message: String;
   type: 'success' | 'error';
   onClose: () => void;
 };
 
 const Toast = (props: Toasts) => {
-  const { type, onClose } = props;
+  const { message, type, onClose } = props;
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
-    }, 3000); // Change this value to control how long the toast is displayed
+    }, 3000);
 
     return () => clearTimeout(timer);
-  }, [onClose]);
+  }, []);
 
   console.log(' type toast : ', type);
-  console.log(' prop type : ', props.type);
+  console.log(' prop type : ', message);
 
   return (
     <>
       {type === 'success' && (
         <div onClick={onClose}>
-          <ToastSuccess />
+          <ToastSuccess msg={message} />
         </div>
       )}
       {type === 'error' && (
         <div onClick={onClose}>
-          <ToastError />
+          <ToastError msg={message} />
         </div>
       )}
     </>

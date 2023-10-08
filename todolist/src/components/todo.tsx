@@ -4,33 +4,44 @@ import Toast from '../layout/toast';
 
 const Todo = () => {
   const [contents, setContents] = useState({
+    id: '',
     content: '',
     completed: false,
   });
+
+  const [msg, setMsg] = useState<String>('');
+
+  const [show, setShow] = useState<Boolean>(false);
+
+  const [type, setType] = useState<string>('');
+
+  const [chooseTaskID, setChooseTaskID] = useState<string>('');
+
   const [todolist, setTodolist] = useState([
     {
+      id: 'Code 1',
       content: 'Code 1',
       completed: false,
     },
     {
+      id: 'Code 2',
       content: 'Code 2',
       completed: false,
     },
     {
+      id: 'Code 3',
       content: 'Code 3',
       completed: false,
     },
   ]);
 
-  const [show, setShow] = useState<Boolean>(false);
-  const [type, setType] = useState<String>('success' || 'error');
-
   const handleClose = () => {
     setShow(false);
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+  const handleChangeInput = (e: ChangeEvent<HTMLInputElement>): void => {
     const name = e.target.name;
+
     setContents((prev) => {
       return {
         ...prev,
@@ -40,36 +51,65 @@ const Todo = () => {
   };
 
   const handleAdd = () => {
-    setShow(true);
     const checkLoop = todolist.some((todo) =>
       todo.content.includes(contents.content)
     );
 
-    // console.log(checkLoop);
+    setShow(true);
 
     if (checkLoop == true) {
       setType('error');
-      console.log('setType');
+      setMsg('Thêm thất bại');
     } else {
-      console.log('setTodo');
-
       setType('success');
-
+      setMsg('Thêm thành công 1');
       setTodolist((prev: any) => {
+        console.log('trc khi them :', prev);
+        contents.id = contents.content;
         const newTodo = [...prev, contents];
+        console.log('sau khi them : ', newTodo);
         return newTodo;
       });
     }
   };
 
   const handleDelete = (taskContent: string) => {
+    setType('success');
+    setMsg('Xóa thành công');
+    setShow(true);
     setTodolist((prev) => {
       const newTodo = prev.filter((p) => p.content !== taskContent);
       return newTodo;
     });
   };
 
-  console.log('type :', type);
+  const handleEditTodo = (newTaskContent: string) => {
+    const checkLoop = todolist.some((todo) => todo.content === newTaskContent);
+
+    setShow(true);
+
+    if (checkLoop === true) {
+      setType('error');
+      setMsg('Sửa thất bại');
+    } else {
+      setType('success');
+      setMsg('Sửa thành công');
+      const checkID = todolist.findIndex((ele) => ele.id == chooseTaskID);
+      setTodolist((prev) => {
+        let newTodo = [...prev];
+        newTodo[checkID] = {
+          ...newTodo[checkID],
+          id: newTaskContent,
+          content: newTaskContent,
+        };
+        return newTodo;
+      });
+    }
+  };
+
+  const handleChooseTask = (id: string) => {
+    setChooseTaskID(id);
+  };
 
   return (
     <>
@@ -87,7 +127,7 @@ const Todo = () => {
               type="text"
               value={contents.content}
               placeholder="Add a task"
-              onChange={handleChange}
+              onChange={handleChangeInput}
             />
             <button
               className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
@@ -105,12 +145,14 @@ const Todo = () => {
                 content={todos.content}
                 completed={todos.completed}
                 onDelete={() => handleDelete(`${todos.content}`)}
+                onEdit={() => handleChooseTask(`${todos.content}`)}
+                onSendEdit={handleEditTodo}
               />
             );
           })}
         </ul>
       </div>
-      {show && <Toast type={type} onClose={handleClose} />}
+      {show && <Toast message={msg} type={`${type}`} onClose={handleClose} />}
     </>
   );
 };
