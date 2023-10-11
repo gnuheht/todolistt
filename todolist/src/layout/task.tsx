@@ -35,9 +35,6 @@ const Task = (contents: TaskContent) => {
     setEdit(true);
   };
 
-  console.log('content task :', content);
-  console.log(valEdit);
-
   return (
     <>
       {edit === true ? (

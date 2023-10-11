@@ -1,5 +1,21 @@
 {
   "todo" : [
-    
+    {
+      {
+        "id": "Code 1",
+        "content": "Code 1",
+        "completed": "false",
+      },
+      {
+        "id": "Code 2",
+        "content": "Code 2",
+        "completed": "false",
+      },
+      {
+        "id": "Code 3",
+        "content": "Code 3",
+        "completed": "false",
+      },
+    }
   ]
 }
