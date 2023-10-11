@@ -1,21 +1,19 @@
 {
-  "todo" : [
+  "todos": [
     {
-      {
-        "id": "Code 1",
-        "content": "Code 1",
-        "completed": "false",
-      },
-      {
-        "id": "Code 2",
-        "content": "Code 2",
-        "completed": "false",
-      },
-      {
-        "id": "Code 3",
-        "content": "Code 3",
-        "completed": "false",
-      },
+      "id": 1,
+      "content": "Code 1",
+      "completed": false
+    },
+    {
+      "id": 2,
+      "content": "Code 2",
+      "completed": false
+    },
+    {
+      "id": 3,
+      "content": "Code 3",
+      "completed": false
     }
   ]
 }
